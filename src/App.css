@@ -1,0 +1,7 @@
+.site-title {
+  color: var(--primary);
+  font-weight: 200;
+  font-size: 12vw;
+  letter-spacing: 2vw;
+  text-shadow: 0 0 24px var(--primary);
+}

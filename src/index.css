@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --light: #EEE;
+  --dark: #111;
+  --primary: #CC83CB;
+  --secondary: #242038;
+  --other: #4FA3A4;
+
+  font-family: "KumbhSans", sans-serif;
+  color: var(--light);
+  background-color: var(--dark);
+}
+
+@font-face {
+  font-family: KumbhSans;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./assets/fonts/KumbhSans-VariableFont_YOPQ\,wght.ttf") format("truetype");
+}
