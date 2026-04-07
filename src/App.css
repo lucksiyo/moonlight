@@ -40,30 +40,3 @@ footer {
 .tinted-section-title {
   color: var(--primary);
 }
-
-#gallery {
-  height: 1000vh;
-
-  @media screen and (max-width:1023px){
-    display: none;
-  }
-}
-
-.gallery-container {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  overflow: visible;
-}
-
-.gallery-imgs {
-  display: flex;
-  gap: 2rem;
-}
-
-.still {
-  width: 48rem;
-}

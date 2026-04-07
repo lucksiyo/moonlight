@@ -1,5 +1,6 @@
 import './App.css'
 import { useRef } from 'react'
+import { useMediaQuery } from 'usehooks-ts'
 import { motion, useScroll, useTransform } from 'motion/react'
 import heroImg from './assets/images/hero.webp'
 import moviePoster from './assets/images/poster.webp'
@@ -15,17 +16,18 @@ import still9 from './assets/images/still-9.webp'
 import still10 from './assets/images/still-10.webp'
 
 function App() {
+  const isDesktop = useMediaQuery('(min-width: 1024px)')
+
+  // horizontal scroll
   const containerRef = useRef(null)
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end end"],
-    })
-
-    const ITEM_WIDTH = 768; // 48 rem
-    const GAP = 18;
-
-    const totalDistance = 9 * (ITEM_WIDTH + GAP) 
-    const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance + ITEM_WIDTH - GAP])
+  const { scrollYProgress } = useScroll({
+      target: containerRef,
+      offset: ["start 50%", "end 75%"],
+  })
+  const ITEM_WIDTH = 768  // 48 rem
+  const GAP = 18
+  const totalDistance = 9 * (ITEM_WIDTH + GAP) 
+  const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance + ITEM_WIDTH - GAP])
 
   return (
     <>
@@ -74,20 +76,37 @@ function App() {
         </div>
       </div>
 
-      <div id='gallery' ref={containerRef} className='p-8 md:py-32 lg:px-16 xl:px-32 xl:py-48'>
-        <div className='gallery-container'>
-          <motion.div style={{ x }} className='gallery-imgs'>
-            <img className='still' src={still1} alt=''></img>
-            <img className='still' src={still2} alt=''></img>
-            <img className='still' src={still3} alt=''></img>
-            <img className='still' src={still4} alt=''></img>
-            <img className='still' src={still5} alt=''></img>
-            <img className='still' src={still6} alt=''></img>
-            <img className='still' src={still7} alt=''></img>
-            <img className='still' src={still8} alt=''></img>
-            <img className='still' src={still9} alt=''></img>
-            <img className='still' src={still10} alt=''></img>
-          </motion.div>
+      <div id='gallery' ref={containerRef} className='lg:h-[900vh] p-8 md:py-32 lg:px-16 xl:px-32 xl:py-48'>
+        <div className='lg:sticky lg:top-0 lg:h-screen lg:flex lg:justify-start lg:items-center lg:overflow-visible'>
+          {isDesktop && 
+            <motion.div style={{ x }} className='flex gap-8'>
+              <img className='w-[48rem]' src={still1} alt=''></img>
+              <img className='w-[48rem]' src={still2} alt=''></img>
+              <img className='w-[48rem]' src={still3} alt=''></img>
+              <img className='w-[48rem]' src={still4} alt=''></img>
+              <img className='w-[48rem]' src={still5} alt=''></img>
+              <img className='w-[48rem]' src={still6} alt=''></img>
+              <img className='w-[48rem]' src={still7} alt=''></img>
+              <img className='w-[48rem]' src={still8} alt=''></img>
+              <img className='w-[48rem]' src={still9} alt=''></img>
+              <img className='w-[48rem]' src={still10} alt=''></img>
+            </motion.div>
+          }
+          {!isDesktop && 
+            <motion.div className='flex flex-col gap-8'>
+              <img className='w-[48rem]' src={still1} alt=''></img>
+              <img className='w-[48rem]' src={still2} alt=''></img>
+              <img className='w-[48rem]' src={still3} alt=''></img>
+              <img className='w-[48rem]' src={still4} alt=''></img>
+              <img className='w-[48rem]' src={still5} alt=''></img>
+              <img className='w-[48rem]' src={still6} alt=''></img>
+              <img className='w-[48rem]' src={still7} alt=''></img>
+              <img className='w-[48rem]' src={still8} alt=''></img>
+              <img className='w-[48rem]' src={still9} alt=''></img>
+              <img className='w-[48rem]' src={still10} alt=''></img>
+            </motion.div>
+          }
+          
         </div>
       </div>
 

@@ -7,6 +7,7 @@
   --primary: #4FA3A4;
   --secondary: #242038;
 
+  overflow-x: hidden;
   font-family: "KumbhSans", sans-serif;
   font-weight: 500;
   color: var(--light);
