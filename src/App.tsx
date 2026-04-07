@@ -1,7 +1,7 @@
 import './App.css'
 import { useRef } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
-import { motion, useScroll, useTransform } from 'motion/react'
+import { easeInOut, motion, useScroll, useTransform } from 'motion/react'
 import heroImg from './assets/images/hero.webp'
 import moviePoster from './assets/images/poster.webp'
 import still1 from './assets/images/still-1.webp'
@@ -18,22 +18,69 @@ import still10 from './assets/images/still-10.webp'
 function App() {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
 
-  // horizontal scroll
-  const containerRef = useRef(null)
-  const { scrollYProgress } = useScroll({
-      target: containerRef,
-      offset: ["start 50%", "end 75%"],
+  // hero blur scroll
+  const heroRef = useRef(null)
+  const { scrollYProgress: heroBlurProgress } = useScroll({
+    target: heroRef,
+    offset: ['end start', 'end end'],
+  })
+  const heroOpacity = useTransform(heroBlurProgress, [1, 0], [1, 0])
+  const heroScale = useTransform(heroBlurProgress, [1, 0], [1, 1.25])
+  const heroTextOpacity = useTransform(heroBlurProgress, [1, 0], [1, 0])
+  
+  // hero parallax scroll
+  const { scrollYProgress: heroParallaxProgress } = useScroll({
+    target: heroRef,
+    offset: ['start end', 'end start'],
+  })
+  const heroMove = useTransform(heroParallaxProgress, [1, 0], ['-15%', '15%'])
+  const heroTextMove = useTransform(heroParallaxProgress, [0, 1], [250, -250])
+
+  // gallery horizontal scroll
+  const galleryRef = useRef(null)
+  const { scrollYProgress: galleryProgress } = useScroll({
+      target: galleryRef,
+      offset: ['start 50%', 'end 75%'],
   })
   const ITEM_WIDTH = 768  // 48 rem
   const GAP = 18
   const totalDistance = 9 * (ITEM_WIDTH + GAP) 
-  const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance + ITEM_WIDTH - GAP])
+  const x = useTransform(galleryProgress, [0, 1], [0, -totalDistance + ITEM_WIDTH - GAP])
 
   return (
     <>
-      <div id='hero' className='h-screen'>
-        <img className='object-cover h-full absolute inset-0' src={heroImg} alt='Boy looks out towards the ocean. Screencap from Moonlight (2016).'/>
-        <h1 className='site-title uppercase absolute inset-0 flex justify-center items-center'>Moonlight</h1>
+      <div ref={heroRef} id='hero' className='h-screen'>
+        <motion.img 
+          style={{
+            opacity: heroOpacity, 
+            translateY: heroMove,
+            scale: heroScale,
+            transition: 'opacity 0.3s linear' 
+          }}
+          className='overflow-clip object-cover h-full absolute inset-0'
+          src={heroImg}
+          alt='Boy looks out towards the ocean. Screencap from Moonlight (2016).'
+        />
+        <motion.h1
+          initial={{
+            opacity: 0,
+            y: 100
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0
+          }}
+          viewport={{ once: true }}
+          transition={{ ease: easeInOut, duration: 0.5 }}
+          style={{ 
+            y: heroTextMove, 
+            opacity: heroTextOpacity, 
+            transition: 'opacity 0.3s ease'
+          }} 
+          className='site-title uppercase absolute inset-0 flex justify-center items-center'
+        >
+          Moonlight
+        </motion.h1>
       </div>
 
       <div id='summary' className='p-8 md:py-32 lg:px-16 xl:px-32 xl:py-48 flex flex-col md:grid grid-cols-2 gap-8 md:gap-12 xl:gap-24'>
@@ -76,7 +123,7 @@ function App() {
         </div>
       </div>
 
-      <div id='gallery' ref={containerRef} className='lg:h-[900vh] p-8 md:py-32 lg:px-16 xl:px-32 xl:py-48'>
+      <div id='gallery' ref={galleryRef} className='lg:h-[900vh] p-8 md:py-32 lg:px-16 xl:px-32 xl:py-48'>
         <div className='lg:sticky lg:top-0 lg:h-screen lg:flex lg:justify-start lg:items-center lg:overflow-visible'>
           {isDesktop && 
             <motion.div style={{ x }} className='flex gap-8'>
