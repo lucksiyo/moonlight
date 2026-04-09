@@ -43,10 +43,8 @@ function App() {
       target: galleryRef,
       offset: ['start 50%', 'end 75%'],
   })
-  const ITEM_WIDTH = 768  // 48 rem
-  const GAP = 18
-  const totalDistance = 9 * (ITEM_WIDTH + GAP) 
-  const x = useTransform(galleryProgress, [0, 1], [0, -totalDistance + ITEM_WIDTH - GAP])
+  
+  const x = useTransform(galleryProgress, [0, 1], [1800, -8100])
 
   return (
     <>
@@ -125,7 +123,7 @@ function App() {
         </div>
       </div>
 
-      <div id='gallery' ref={galleryRef} className='lg:h-[900vh] p-8 md:py-32 lg:px-16 xl:px-32 xl:py-48'>
+      <div id='gallery' ref={galleryRef} className='lg:h-[850vh] p-8 md:py-32 lg:px-16 xl:px-32 xl:py-48'>
         <div className='lg:sticky lg:top-0 lg:h-screen lg:flex lg:justify-start lg:items-center lg:overflow-visible'>
           {isDesktop && 
             <motion.div style={{ x }} className='flex gap-8'>
