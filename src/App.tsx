@@ -1,7 +1,7 @@
 import './App.css'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
-import { easeInOut, motion, MotionConfig, useScroll, useTransform } from 'motion/react'
+import { easeInOut, motion, MotionConfig, useMotionValueEvent, useScroll, useTransform } from 'motion/react'
 import { UseSmoothScroll } from 'smooth-motion'
 import heroImg from './assets/images/hero.webp'
 import moviePoster from './assets/images/poster.webp'
@@ -18,6 +18,18 @@ import still10 from './assets/images/still-10.webp'
 
 function App() {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
+
+  // detect scroll direction
+  const { scrollY } = useScroll()
+  const [hidden, setHidden] = useState(false)
+  useMotionValueEvent(scrollY, 'change', (current) => {
+    const previous = scrollY.getPrevious() ?? 0
+    if (current > previous && current > 150) {
+      setHidden(true)
+    } else {
+      setHidden(false)
+    }
+  })
 
   // hero blur scroll
   const heroRef = useRef(null)
@@ -68,7 +80,27 @@ function App() {
 
   return (
     <>
-      <UseSmoothScroll/>
+      <UseSmoothScroll speed={2}/>
+
+      {/* NAV */}
+      {
+        isDesktop && 
+          <motion.nav
+            className='fixed top-0 left-0 right-0 z-100 p-8 backdrop-blur-xs'
+            animate={{
+              y: hidden ? -150 : 0,
+              opacity: hidden ? 0 : 1
+            }}
+            transition={{ ease: easeInOut, duration: 0.3}}
+          >
+            <ol className='flex justify-center gap-8 uppercase'>
+              <li><a href='#about'>About</a></li>
+              <li><a href='#gallery'>Gallery</a></li>
+              <li><a href='#cast-crew'>Cast & Crew</a></li>
+              <li><a href='#awards'>Awards</a></li>
+            </ol>
+          </motion.nav>
+      }
 
       {/* HERO */}
       <div ref={heroRef} id='hero' className='h-screen'>
@@ -99,8 +131,8 @@ function App() {
         </motion.h1>
       </div>
 
-      {/* SUMMARY */}
-      <div id='summary' className='relative p-8 md:py-32 lg:px-16 xl:px-32 xl:py-48'>
+      {/* ABOUT */}
+      <div id='about' className='relative p-8 md:py-32 lg:px-16 xl:px-32 xl:py-48'>
         <div className='flex flex-col md:grid grid-cols-2 gap-8 md:gap-12 xl:gap-24'>
           <div className='grid grid-cols-2 md:grid-cols-3 gap-8'>
             <motion.div className='flex flex-col'

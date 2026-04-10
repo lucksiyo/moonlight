@@ -9,12 +9,17 @@ h6 {
 }
 
 a {
-  text-decoration: underline;
+  transition: 0.3s ease-in-out;
 }
 
 a:hover {
   cursor: pointer;
   color: var(--accent);
+  font-weight: 600;
+}
+
+footer a {
+  text-decoration: underline;
 }
 
 footer hr {
