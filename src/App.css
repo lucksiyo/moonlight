@@ -41,7 +41,24 @@ footer hr {
   color: var(--primary);
 }
 
-.gallery-text {
+.large-text {
   color: var(--accent);
-  font-size: 10vw;
+  font-size: 8vw;
+  font-weight: 100;
+  text-shadow: 0 0 24px var(--accent);
+
+  @media screen and (max-width:1023px){
+    display: none;
+  }
+}
+
+.tinted-large-text {
+  color: var(--primary);
+  font-size: 8vw;
+  font-weight: 100;
+  text-shadow: 0 0 24px var(--primary);
+
+  @media screen and (max-width:1023px){
+    display: none;
+  }
 }
