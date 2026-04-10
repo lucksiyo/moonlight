@@ -1,7 +1,7 @@
 import './App.css'
 import { useRef } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
-import { easeInOut, motion, useScroll, useTransform } from 'motion/react'
+import { easeInOut, motion, MotionConfig, useScroll, useTransform } from 'motion/react'
 import { UseSmoothScroll } from 'smooth-motion'
 import heroImg from './assets/images/hero.webp'
 import moviePoster from './assets/images/poster.webp'
@@ -35,7 +35,7 @@ function App() {
     offset: ['start end', 'end start'],
   })
   const heroMove = useTransform(heroParallaxProgress, [1, 0], ['-15%', '15%'])
-  const heroTextMove = useTransform(heroParallaxProgress, [0, 1], [300, -300])
+  const heroTextMove = useTransform(heroParallaxProgress, [0.5, 1], [0, -300])
 
   // gallery horizontal scroll
   const galleryRef = useRef(null)
@@ -43,7 +43,10 @@ function App() {
       target: galleryRef,
       offset: ['start 50%', 'end 75%'],
   })
-  const galleryMove = useTransform(galleryProgress, [0, 1], [1800, -8100])
+  const galleryMove = useTransform(galleryProgress, [0, 1], [1800, -8200])
+  const galleryTextOpacity = useTransform(galleryProgress, [0.1, 0.25, 0.8, 0.95], [0, 1, 1, 0])
+  const galleryTopTextMove = useTransform(galleryProgress, [0.1, 0.2, 0.85, 0.95], [0, -100, -100, 0])
+  const galleryBottomTextMove = useTransform(galleryProgress, [0.1, 0.2, 0.85, 0.95], [0, 100, 100, 0])
 
   return (
     <>
@@ -147,31 +150,118 @@ function App() {
       <div id='gallery' ref={galleryRef} className='lg:h-[850vh] p-8 md:py-32 lg:px-16 xl:px-32 xl:py-48'>
         <div className='lg:sticky lg:top-0 lg:h-screen lg:flex lg:justify-start lg:items-center lg:overflow-visible'>
           {isDesktop ? ( 
-            <motion.div style={{ x: galleryMove }} className='flex gap-8'>
-              <img className='w-[48rem]' src={still1} alt='Boy sticks his arm out of the passenger seat of a blue car. Screencap from Moonlight (2016).'></img>
-              <img className='w-[48rem]' src={still2} alt='Group of young boys playing on a grass field. Screencap from Moonlight (2016).'></img>
-              <img className='w-[48rem]' src={still3} alt='Man teaching a boy how to float in the ocean. Screencap from Moonlight (2016).'></img>
-              <img className='w-[48rem]' src={still4} alt='Woman stares directly at the camera. Screencap from Moonlight (2016).'></img>
-              <img className='w-[48rem]' src={still5} alt='Teen boy sits at train station at night. Screencap from Moonlight (2016).'></img>
-              <img className='w-[48rem]' src={still6} alt='Two teen boys looking at each other while sitting on the beach at night. Screencap from Moonlight (2016).'></img>
-              <img className='w-[48rem]' src={still7} alt='Fist clenching a handful of sand. Screencap from Moonlight (2016).'></img>
-              <img className='w-[48rem]' src={still8} alt='A man and his mother have a conversation at a table outside. Screencap from Moonlight (2016).'></img>
-              <img className='w-[48rem]' src={still9} alt='Two men sitting in a car. Screencap from Moonlight (2016).'></img>
-              <img className='w-[48rem]' src={still10} alt="A man leaning his head on another man's shoulder. Screencap from Moonlight (2016)."></img>
-            </motion.div>
+            <div className='relative uppercase'>
+              <motion.h6 
+                style={{ x: galleryTopTextMove, opacity: galleryTextOpacity }} 
+                className='sticky top-0 flex justify-start gallery-text'
+              >
+                Gallery
+              </motion.h6>
+              <motion.div style={{ x: galleryMove }} className='flex gap-8'>
+                <MotionConfig transition={{ ease: easeInOut, duration: 0.5 }}>
+                  <motion.img className='w-[48rem]' src={still1} alt='Boy sticks his arm out of the passenger seat of a blue car. Screencap from Moonlight (2016).'
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  ></motion.img>
+                  <motion.img className='w-[48rem]' src={still2} alt='Group of young boys playing on a grass field. Screencap from Moonlight (2016).'
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  ></motion.img>
+                  <motion.img className='w-[48rem]' src={still3} alt='Man teaching a boy how to float in the ocean. Screencap from Moonlight (2016).'
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  ></motion.img>
+                  <motion.img className='w-[48rem]' src={still4} alt='Woman stares directly at the camera. Screencap from Moonlight (2016).'
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  ></motion.img>
+                  <motion.img className='w-[48rem]' src={still5} alt='Teen boy sits at train station at night. Screencap from Moonlight (2016).'
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  ></motion.img>
+                  <motion.img className='w-[48rem]' src={still6} alt='Two teen boys looking at each other while sitting on the beach at night. Screencap from Moonlight (2016).'
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  ></motion.img>
+                  <motion.img className='w-[48rem]' src={still7} alt='Fist clenching a handful of sand. Screencap from Moonlight (2016).'
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  ></motion.img>
+                  <motion.img className='w-[48rem]' src={still8} alt='A man and his mother have a conversation at a table outside. Screencap from Moonlight (2016).'
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  ></motion.img>
+                  <motion.img className='w-[48rem]' src={still9} alt='Two men sitting in a car. Screencap from Moonlight (2016).'
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  ></motion.img>
+                  <motion.img className='w-[48rem]' src={still10} alt="A man leaning his head on another man's shoulder. Screencap from Moonlight (2016)."
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                  ></motion.img>
+                </MotionConfig>
+              </motion.div>
+              <motion.h6 
+                style={{ x: galleryBottomTextMove, opacity: galleryTextOpacity }} 
+                className='sticky bottom-0 pt-2 flex justify-end gallery-text'
+              >
+                Gallery
+              </motion.h6>
+            </div>
           ) : (     
-            <motion.div className='flex flex-col gap-8'>
-              <img className='w-[48rem]' src={still1} alt=''></img>
-              <img className='w-[48rem]' src={still2} alt=''></img>
-              <img className='w-[48rem]' src={still3} alt=''></img>
-              <img className='w-[48rem]' src={still4} alt=''></img>
-              <img className='w-[48rem]' src={still5} alt=''></img>
-              <img className='w-[48rem]' src={still6} alt=''></img>
-              <img className='w-[48rem]' src={still7} alt=''></img>
-              <img className='w-[48rem]' src={still8} alt=''></img>
-              <img className='w-[48rem]' src={still9} alt=''></img>
-              <img className='w-[48rem]' src={still10} alt=''></img>
-            </motion.div>
+            <>
+            <motion.h6 className='mb-4 section-title uppercase text-center'
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ ease: easeInOut, duration: 0.5 }} 
+            >
+              Gallery
+            </motion.h6>
+            <div className='flex flex-col items-center gap-8'>
+              <MotionConfig transition={{ ease: easeInOut, duration: 0.5 }}>
+                <motion.img className='w-[48rem]' src={still1} alt='Boy sticks his arm out of the passenger seat of a blue car. Screencap from Moonlight (2016).'
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                ></motion.img>
+                <motion.img className='w-[48rem]' src={still2} alt='Group of young boys playing on a grass field. Screencap from Moonlight (2016).'
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                ></motion.img>
+                <motion.img className='w-[48rem]' src={still3} alt='Man teaching a boy how to float in the ocean. Screencap from Moonlight (2016).'
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                ></motion.img>
+                <motion.img className='w-[48rem]' src={still4} alt='Woman stares directly at the camera. Screencap from Moonlight (2016).'
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                ></motion.img>
+                <motion.img className='w-[48rem]' src={still5} alt='Teen boy sits at train station at night. Screencap from Moonlight (2016).'
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                ></motion.img>
+                <motion.img className='w-[48rem]' src={still6} alt='Two teen boys looking at each other while sitting on the beach at night. Screencap from Moonlight (2016).'
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                ></motion.img>
+                <motion.img className='w-[48rem]' src={still7} alt='Fist clenching a handful of sand. Screencap from Moonlight (2016).'
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                ></motion.img>
+                <motion.img className='w-[48rem]' src={still8} alt='A man and his mother have a conversation at a table outside. Screencap from Moonlight (2016).'
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                ></motion.img>
+                <motion.img className='w-[48rem]' src={still9} alt='Two men sitting in a car. Screencap from Moonlight (2016).'
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                ></motion.img>
+                <motion.img className='w-[48rem]' src={still10} alt="A man leaning his head on another man's shoulder. Screencap from Moonlight (2016)."
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                ></motion.img>
+              </MotionConfig>
+            </div>
+            </>
           )
         }
         </div>

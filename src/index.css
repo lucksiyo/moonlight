@@ -8,6 +8,7 @@
   --secondary: #242038;
 
   overflow-x: hidden;
+  overscroll-behavior: none;
   font-family: "KumbhSans", sans-serif;
   font-weight: 500;
   color: var(--light);

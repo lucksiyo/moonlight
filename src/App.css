@@ -40,3 +40,8 @@ footer hr {
 .tinted-section-title {
   color: var(--primary);
 }
+
+.gallery-text {
+  color: var(--accent);
+  font-size: 10vw;
+}
