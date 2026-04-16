@@ -15,7 +15,6 @@ a {
 a:hover {
   cursor: pointer;
   color: var(--accent);
-  font-weight: 600;
 }
 
 footer a {
@@ -66,4 +65,8 @@ footer hr {
   @media screen and (max-width:1023px){
     display: none;
   }
+}
+
+.signature {
+  font-family: 'Asimovian', sans-serif;
 }

@@ -436,7 +436,7 @@ function App() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ ease: easeInOut, delay: 0.3, duration: 0.5 }}     
         >
-          <p>Prod. 2026 by <a href='https://fjtria.github.io/' target='_blank' rel='noopener noreferrer'>FJTRIA</a></p>
+          <p>Prod. 2026 by <a href='https://lucksiyo.nekoweb.org/' target='_blank' rel='noopener noreferrer'><span className='signature'>lucksiyo!</span></a></p>
           <p>All media property of <a href='https://a24films.com/films/moonlight' target='_blank' rel='noopener noreferrer'>A24</a>. Used for portfolio purposes only.</p>
         </motion.div>        
       </footer>
